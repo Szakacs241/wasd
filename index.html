@@ -20,8 +20,6 @@ var canvas, canvasContext,
   playerSpeedX = 0,
   playerSpeedY = 0;
   //player adatai
- 
-
 window.onload = function() {
     canvas = document.getElementById('gameCanvas');
     canvasContext = canvas.getContext('2d');
@@ -40,46 +38,21 @@ var KEY_W = 87,
     KEY_S = 83,
     KEY_D = 68,
     KEY_SPACE = 32,
- // Billentyűk //
-
  //WASD tartása 
  keyHeld_Down = false,
  keyHeld_Up = false,
  keyHeld_Left = false,
  keyHeld_Right = false,
- // WASD tartása //
-
  //Egér középen kezdésnél
  mouseX = 0,
  mouseY = 0;
- // egér középen //
-
 // Egér követése
 function updateMousePos(evt) {
   var rect = canvas.getBoundingClientRect();
   var root = document.documentElement;
- 
   mouseX = evt.clientX - rect.left - root.scrollLeft;
   mouseY = evt.clientY - rect.top - root.scrollTop;
-// Egér követés //
 }
-
-// Lövés (még nincs kész)
-function spacePressed(evt) {
-  if(evt.keyCode == KEY_SPACE) {
-    keyHeld_Shoot = true;
-  }
-}
-function keyReleased(evt) {
-  if (evt.keyCode == KEY_SPACE) {
-    keyHeld_Shoot = false;
-  }
-}
-function playerShoot() {
-
-}
-// lövés //
-    
 // WASD mozgás
 function keyPressed(evt) {
   if (evt.keyCode == KEY_A) {
@@ -94,10 +67,8 @@ function keyPressed(evt) {
   if (evt.keyCode == KEY_S) {
     keyHeld_Down = true;
   }
- 
   evt.preventDefault();
 }
- 
 function keyReleased(evt) {
   if (evt.keyCode == KEY_A) {
     keyHeld_Left = false;
@@ -116,8 +87,6 @@ function keyReleased(evt) {
     playerSpeedY = 0;
   }
 }
-// WASD mozgás //
-
 // Játékos mozgás/irány/sebesség
 function playerMove() {
   playerX += playerSpeedX;
@@ -141,8 +110,6 @@ function playerMove() {
 if (playerX <= 0) {
     playerX = 0;
 }
-// fent és lent nem enged tovább // 
-
 // jobb és bal oldalt nem enged tovább 
 if (playerY <= 0) {
     playerY = 0;
@@ -150,34 +117,26 @@ if (playerY <= 0) {
 if (playerY >= canvas.height - playerH) {
     playerY = canvas.height - playerH;
 }
-// jobb és bal oldalt nem enged tovább //
 }
-// Játékos mozgás/irány/sebesség //
-
 // canvas tartalma
 function drawAll() {
   colorRect(0, 0, canvas.width, canvas.height, 'black');
   colorText("Irányítás: W-A-S-D", 10, canvas.height - 10, 'grey');
   colorRect(playerX, playerY, playerW, playerH, 'red');
- 
 }
- 
 function colorCircle(centerX, centerY, radius, drawColor) {
   canvasContext.fillStyle = 'drawColor';
   canvasContext.beginPath();
   canvasContext.arc(centerX, centerY, radius, 0, Math.PI * 2, true);
   canvasContext.fill();
 }
- 
 function colorRect(leftX, topY, width, height, drawColor) {
   canvasContext.fillStyle = drawColor;
   canvasContext.fillRect(leftX, topY, width, height);
 }
- 
 function colorText(shownText, xPos, yPos, drawColor) {
   canvasContext.fillStyle = drawColor;
   canvasContext.fillText(shownText, xPos, yPos);
 }
-// canvas tartalma //
 </script>
 </html>
