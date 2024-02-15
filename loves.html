@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teso</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <canvas id="gameCanvas" width="1280" height="720"></canvas>
+    <script>
+        var canvas, canvasContext;
+        var playerX = 640,
+            playerY = 370,
+            playerW = 20,
+            playerH = 20,
+            playerSpeedX = 0,
+            playerSpeedY = 0;
+        var mouseX = 0,
+            mouseY = 0;
+        var bullets = [];
+        var bulletSpeed = 5;
+        window.onload = function() {
+            canvas = document.getElementById('gameCanvas');
+            canvasContext = canvas.getContext('2d');
+            var framesPerSecond = 60;
+            setInterval(function() {
+                moveEverything();
+                drawEverything();
+            }, 1000 / framesPerSecond);
+            canvas.addEventListener('mousemove', updateMousePos);
+            canvas.addEventListener('mousedown', mousePressed);
+        }
+        function updateMousePos(evt) {
+            var rect = canvas.getBoundingClientRect();
+            var root = document.documentElement;
+
+            mouseX = evt.clientX - rect.left - root.scrollLeft;
+            mouseY = evt.clientY - rect.top - root.scrollTop;
+        }
+        function mousePressed(evt) {
+            shootBullet();
+        }
+        function shootBullet() {
+            var bullet = {
+                x: playerX,
+                y: playerY,
+                size: 5,
+                vx: (mouseX - playerX) / 10, 
+                vy: (mouseY - playerY) / 10 
+            };
+            bullets.push(bullet);
+        }
+        function moveEverything() {
+            playerX += playerSpeedX;
+            playerY += playerSpeedY;
+
+            for (var i = 0; i < bullets.length; i++) {
+                var bullet = bullets[i];
+                bullet.x += bullet.vx;
+                bullet.y += bullet.vy;
+            }
+            bullets = bullets.filter(function(bullet) {
+                return bullet.x >= 0 && bullet.x <= canvas.width && bullet.y >= 0 && bullet.y <= canvas.height;
+            });
+        }
+        function drawEverything() {
+            canvasContext.fillStyle = 'black';
+            canvasContext.fillRect(0, 0, canvas.width, canvas.height);
+            canvasContext.fillStyle = 'red';
+            canvasContext.fillRect(playerX, playerY, playerW, playerH);
+            canvasContext.fillStyle = 'white';
+            for (var i = 0; i < bullets.length; i++) {
+                var bullet = bullets[i];
+                canvasContext.fillRect(bullet.x - bullet.size / 2, bullet.y - bullet.size / 2, bullet.size, bullet.size);
+            }
+        }
+    </script>
+</body>
+</html>
