@@ -8,7 +8,6 @@
 </head>
 <body>
     <canvas id="gameCanvas" width="1280" height="720"></canvas>
-
     <script>
         var canvas, canvasContext;
         var playerX = 640,
@@ -17,24 +16,19 @@
             playerH = 20,
             playerSpeedX = 0,
             playerSpeedY = 0;
-
         var mouseX = 0,
             mouseY = 0;
-
         var bullets = [];
         var bulletSpeed = 5;
-
         var KEY_W = 87,
             KEY_A = 65,
             KEY_S = 83,
             KEY_D = 68
-
         var keyHeld_Down = false,
             keyHeld_Up = false,
             keyHeld_Left = false,
             keyHeld_Right = false,
             keyHeld_Shoot = false;
-
         window.onload = function() {
             // Canvas elem kiválasztása és kontextus létrehozása
             canvas = document.getElementById('gameCanvas');
@@ -45,13 +39,12 @@
                 moveEverything();
                 drawEverything();
             }, 1000 / framesPerSecond);
-            // Egérmozgás és billentyű lenyomás figyelése
+            // Egérmozgás és billentyű lenyomás
             canvas.addEventListener('mousemove', updateMousePos);
             canvas.addEventListener('mousedown', mousePressed);
             document.addEventListener('keydown', keyPressed);
             document.addEventListener('keyup', keyReleased);
         }
-
         function updateMousePos(evt) {
             // Egér pozíciójának frissítése
             var rect = canvas.getBoundingClientRect();
@@ -59,18 +52,17 @@
             mouseX = evt.clientX - rect.left - root.scrollLeft;
             mouseY = evt.clientY - rect.top - root.scrollTop;
         }
-
         function mousePressed(evt) {
-            // Egérgomb lenyomásának érzékelése
+            // Egérgomb lenyomása
             keyHeld_Shoot = true;
         }
-        function mouseReleased(evt) {
-            // Egérgomb felengedésének érzékelése
-            if (keyHeld_Shoot = false) {
-                bulletSpeed == 0;
-            }
-        }
-
+         function mouseReleased(evt) {
+              // Egérgomb felengedése
+             if (evt.mousePressed) {
+                 keyHeld_Shoot = false;
+                 bulletSpeed == 0;
+             }
+         }
         function keyPressed(evt) {
             // Billentyű lenyomásának érzékelése
             if (evt.keyCode == KEY_A) {
@@ -86,9 +78,8 @@
                 keyHeld_Down = true;
             }
         }
-
         function keyReleased(evt) {
-            // Billentyű felengedésének érzékelése
+            // Billentyű felengedése
             if (evt.keyCode == KEY_A) {
                 keyHeld_Left = false;
                 playerSpeedX = 0;
@@ -109,7 +100,6 @@
                 keyHeld_Shoot = false;
             }
         }
-
         function moveEverything() {
             // Játékos és lövedékek mozgatása
             playerX += playerSpeedX;
@@ -127,7 +117,6 @@
             if (keyHeld_Right) {
                 playerSpeedX = 7;
             }
-
             // Határok ellenőrzése és lövés indítása
             if (playerX >= canvas.width - playerW) {
                 playerX = canvas.width - playerW;
@@ -141,7 +130,6 @@
             if (playerY >= canvas.height - playerH) {
                 playerY = canvas.height - playerH;
             }
-
             if (keyHeld_Shoot) {
                 var bullet = {
                     x: playerX,
@@ -152,7 +140,6 @@
                 };
                 bullets.push(bullet);
             }
-
             // Lövedékek mozgatása és határok ellenőrzése
             for (var i = 0; i < bullets.length; i++) {
                 var bullet = bullets[i];
@@ -165,7 +152,6 @@
                 }
             }
         }
-
         function drawEverything() {
             // Minden kirajzolása
             canvasContext.fillStyle = 'black';
@@ -181,7 +167,6 @@
                 var bullet = bullets[i];
                 canvasContext.fillRect(bullet.x - bullet.size / 2, bullet.y - bullet.size / 2, bullet.size, bullet.size);
             }
-
             // Szöveg megjelenítése
             canvasContext.fillStyle = 'grey';
             canvasContext.fillText("Irányítás: W-A-S-D", 10, canvas.height - 10);
