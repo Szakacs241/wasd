@@ -4,6 +4,7 @@ body {
     max-height: 720px;
     background-color: black;
     text-align: center;
+    cursor: none; /* Egérkurzor elrejtése */
   }
 canvas {
     border-style: solid;
