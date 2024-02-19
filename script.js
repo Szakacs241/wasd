@@ -280,6 +280,7 @@ function drawEverything() {
         canvasContext.fillText("Lövés és célzás: Egér", 10, canvas.height - 30);
         canvasContext.fillText("Varga Dávid", 1215, canvas.height - 27);
         canvasContext.fillText("Bulyáki Máté", 1213, canvas.height - 10);
+        canvasContext.fillText("Gungl Benjamin", 1200, canvas.height - 44);
 
     // Egérkurzor rajzolása (fehér pont)
     canvasContext.fillStyle = 'white';
