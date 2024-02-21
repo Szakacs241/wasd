@@ -159,9 +159,14 @@
             enemyY += velocityY; // friss. ellenség y poz.
 
             if (distance < playerW && distance < playerH) { // ha az enemy hozzáér a playerhez
-                location.reload(); // oldal újraindul
+                enemyX = Math.random() * (canvas.width - enemyW); // Új helyre helyezés
+                enemyY = Math.random() * (canvas.height - enemyH);
+                score = 0;
             }
         }
+        // function addEnemy(){
+        //     if (score = 20)
+        // }
         function drawEverything() {
             // Vászon kitöltése
             canvasContext.fillStyle = 'black';
